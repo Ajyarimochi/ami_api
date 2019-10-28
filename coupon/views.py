@@ -1,18 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Coupon #Couponクラスをインポート
-from django.db.models import Q
+from django.db.models import Q #Qオブジェクトをインポート
 import json
+import datetime #日時を取得出来るようにdatetimeをインポート
 
 def coupon(request): 
 
     coupons = [] #複数のレコードを辞書型として格納するための配列を用意
+    today = datetime.date.today()
+    print(today)
     if 'coupon_store' in request.GET: #リクエストパラメータで店舗を指定された場合の処理
         coupon_store = request.GET['coupon_store']
         #data = Coupon.objects.filter(store=coupon_store) #リクエストされた店舗と全店で使えるクーポンを取得
-        data = Coupon.objects.filter(Q(store=coupon_store) | Q(store='全店')) #リクエストされた店舗と全店で使えるクーポンを取得
+        data = Coupon.objects.filter(Q(deadline__gte=today),Q(store=coupon_store) | Q(store='全店')) #リクエストされた店舗と全店で使えるクーポンを取得
     else: #リクエストパラメータが無い場合は全てのクーポンを返す
-        data = Coupon.objects.all()
+        data = Coupon.objects.filter(Q(deadline__gte=today))
 
     for record in data: #for文を使い1レコードずつ辞書型に変換
         params = {
