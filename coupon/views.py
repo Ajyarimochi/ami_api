@@ -13,9 +13,9 @@ def coupon(request):
     if 'coupon_store' in request.GET: #リクエストパラメータで店舗を指定された場合の処理
         coupon_store = request.GET['coupon_store']
         #data = Coupon.objects.filter(store=coupon_store) #リクエストされた店舗と全店で使えるクーポンを取得
-        data = Coupon.objects.filter(Q(deadline__gte=today),Q(store=coupon_store) | Q(store='全店')) #リクエストされた店舗と全店で使えるクーポンを取得
+        data = Coupon.objects.filter(Q(deadline__gte=today),Q(status=True),Q(store=coupon_store) | Q(store='全店')) #リクエストされた店舗と全店で使えるクーポンを取得
     else: #リクエストパラメータが無い場合は全てのクーポンを返す
-        data = Coupon.objects.filter(Q(deadline__gte=today))
+        data = Coupon.objects.filter(Q(deadline__gte=today),Q(status=True))
 
     for record in data: #for文を使い1レコードずつ辞書型に変換
         params = {
