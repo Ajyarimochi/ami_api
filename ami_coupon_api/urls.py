@@ -15,9 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf.urls import url, include
+from coupon.urls import router as coupon_router
 
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^api/', include(coupon_router.urls)),
+]
+
+'''
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', include('hello.urls')),
     path('coupon/', include('coupon.urls'))
 ]
+'''
