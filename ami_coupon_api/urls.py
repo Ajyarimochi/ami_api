@@ -17,16 +17,10 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url, include
 from coupon.urls import router as coupon_router
+from rest_framework_jwt.views import obtain_jwt_token # JWT認証のために追加
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(coupon_router.urls)),
+    url(r'^api-auth/', obtain_jwt_token), # 認証のためのURL
 ]
-
-'''
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hello/', include('hello.urls')),
-    path('coupon/', include('coupon.urls'))
-]
-'''

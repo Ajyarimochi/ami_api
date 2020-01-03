@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'coupon',
+    'coupon', # 追加
     'rest_framework', # 追加
     'django_filters', # 追加
 ]
@@ -123,6 +123,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    #フィルタの追加
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    # フィルタの追加
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+
+    # JWT認証の追加
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_jwt.authentication.JSONWebTokenAuthentication',),
+}
+
+JWT_AUTH = {
+    # トークンの期限を無効に設定
+    'JWT_VERIFY_EXPIRATION': False,
 }
