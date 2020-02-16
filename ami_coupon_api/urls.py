@@ -18,9 +18,16 @@ from django.urls import path,include
 from django.conf.urls import url, include
 from coupon.urls import router as coupon_router
 from rest_framework_jwt.views import obtain_jwt_token # JWT認証のために追加
+from django.conf import settings #画像参照のため追加
+from django.contrib.staticfiles.urls import static #画像参照のため追加
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns #画像参照のため追加
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(coupon_router.urls)),
     url(r'^api-auth/', obtain_jwt_token), # 認証のためのURL
-]
+    ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

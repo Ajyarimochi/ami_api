@@ -25,7 +25,7 @@ SECRET_KEY = '(sd$28gm@eich0+*s&)^c!g=1899f#210p0-t@i5%wp5q*n^pf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -121,6 +121,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_URL = '/coupons/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "images"),
+    )
 
 REST_FRAMEWORK = {
     # フィルタの追加
@@ -135,3 +140,6 @@ JWT_AUTH = {
     # トークンの期限を無効に設定
     'JWT_VERIFY_EXPIRATION': False,
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'coupon')
+MEDIA_URL = '/api/coupons/'
